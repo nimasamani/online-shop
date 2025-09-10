@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block content %}
+<h4>ایجاد کد تخفیف</h4>
+<div class="card p-3 shadow-sm">
+  <form method="post">
+    <div class="mb-2">
+      <label>کد تخفیف</label>
+      <input type="text" name="code" class="form-control" required>
+    </div>
+    <div class="mb-2">
+      <label>توضیحات</label>
+      <input type="text" name="description" class="form-control">
+    </div>
+    <div class="mb-2">
+      <label>نوع تخفیف</label>
+      <select name="discount_type" class="form-select">
+        <option value="percentage">درصدی</option>
+        <option value="fixed_amount">مبلغ ثابت</option>
+      </select>
+    </div>
+    <div class="mb-2">
+      <label>مقدار</label>
+      <input type="number" step="0.01" name="value" class="form-control" required>
+    </div>
+    <div class="mb-2">
+      <label>تاریخ شروع</label>
+      <input type="date" name="start_date" class="form-control" required>
+    </div>
+    <div class="mb-2">
+      <label>تاریخ پایان</label>
+      <input type="date" name="end_date" class="form-control" required>
+    </div>
+    <div class="form-check mb-2">
+      <input type="checkbox" name="single_use" class="form-check-input" id="single_use">
+      <label for="single_use" class="form-check-label">یکبار مصرف</label>
+    </div>
+    <button type="submit" class="btn btn-primary">ایجاد</button>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-8">
+    <div class="card shadow-sm p-3">
+      <h4>افزودن آدرس</h4>
+      <form method="post">
+        <div class="mb-2"><input name="street1" class="form-control" placeholder="آدرس (خط اول)" required></div>
+        <div class="mb-2"><input name="street2" class="form-control" placeholder="آدرس (خط دوم)"></div>
+        <div class="row mb-2">
+          <div class="col-md-4"><input name="city" class="form-control" placeholder="شهر" required></div>
+          <div class="col-md-4"><input name="state" class="form-control" placeholder="استان" required></div>
+          <div class="col-md-4"><input name="zipcode" class="form-control" placeholder="کد پستی" required></div>
+        </div>
+        <div class="mb-2"><input name="country" class="form-control" placeholder="کشور" value="ایران" required></div>
+        <div class="mb-2"><input name="phone" class="form-control" placeholder="شماره تماس" required></div>
+        <button class="btn btn-success">افزودن آدرس</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

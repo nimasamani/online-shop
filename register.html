@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-8">
+    <div class="card shadow-sm p-4">
+      <h4 class="mb-3">ثبت‌نام</h4>
+      <form method="post">
+        <div class="row">
+          <div class="col-md-6 mb-3"><input name="email" class="form-control" placeholder="ایمیل" required></div>
+          <div class="col-md-6 mb-3"><input name="fname" class="form-control" placeholder="نام" required></div>
+          <div class="col-md-6 mb-3"><input name="lname" class="form-control" placeholder="نام خانوادگی"></div>
+          <div class="col-md-6 mb-3"><input name="password" type="password" class="form-control" placeholder="رمز عبور" required></div>
+        </div>
+        <div class="mb-3">
+          <select name="role" class="form-select" id="roleSelect" onchange="toggleSellerFields()">
+            <option value="buyer">خریدار</option>
+            <option value="seller">فروشنده</option>
+          </select>
+        </div>
+        <div id="sellerFields" style="display:none">
+          <div class="mb-2"><input name="company" class="form-control" placeholder="نام شرکت"></div>
+          <div class="mb-2"><input name="url" class="form-control" placeholder="آدرس سایت (اختیاری)"></div>
+          <div class="mb-2"><input name="description" class="form-control" placeholder="توضیحات شرکت"></div>
+        </div>
+        <button class="btn btn-success">ثبت‌نام</button>
+      </form>
+    </div>
+  </div>
+</div>
+<script>
+function toggleSellerFields(){
+  var r = document.getElementById('roleSelect');
+  var s = document.getElementById('sellerFields');
+  if(r.value=='seller') s.style.display='block'; else s.style.display='none';
+}
+</script>
+{% endblock %}

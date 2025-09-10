@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card shadow-sm p-3">
+  <h4>ارتباط با ما</h4>
+  <form method="post">
+    <div class="mb-2"><input name="name" class="form-control" placeholder="نام"></div>
+    <div class="mb-2"><input name="email" class="form-control" placeholder="ایمیل"></div>
+    <div class="mb-2"><textarea name="message" class="form-control" placeholder="پیام"></textarea></div>
+    <button class="btn btn-success">ارسال</button>
+  </form>
+</div>
+{% endblock %}

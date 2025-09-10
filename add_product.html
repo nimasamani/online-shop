@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card shadow-sm p-3">
+  <h4>افزودن محصول</h4>
+  <form method="post">
+    <div class="mb-2"><input name="name" class="form-control" placeholder="نام" required></div>
+    <div class="mb-2"><input name="description" class="form-control" placeholder="توضیحات" required></div>
+    <div class="mb-2"><input name="price" class="form-control" placeholder="قیمت" required></div>
+    <div class="row mb-2">
+      <div class="col-md-6"><select name="category_id" class="form-select">{% for c in categories %}<option value="{{ c.category_id }}">{{ c.category_name }}</option>{% endfor %}</select></div>
+      <div class="col-md-6"><input name="available_units" class="form-control" placeholder="موجودی" required></div>
+    </div>
+    <div class="mb-2"><input name="image_url" class="form-control" placeholder="آدرس تصویر"></div>
+    <button class="btn btn-success">افزودن</button>
+  </form>
+</div>
+{% endblock %}

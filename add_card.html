@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-6">
+    <div class="card shadow-sm p-3">
+      <h4>افزودن کارت جدید</h4>
+      <form method="post">
+        <div class="mb-2"><input name="card_number" class="form-control" placeholder="شماره کارت (بدون فاصله)" required></div>
+        <div class="mb-2"><input name="expiry_date" class="form-control" placeholder="تاریخ انقضا YYYY-MM-DD" required></div>
+        <div class="mb-2"><input name="cvv" class="form-control" placeholder="CVV" required></div>
+        <button class="btn btn-success">افزودن کارت</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

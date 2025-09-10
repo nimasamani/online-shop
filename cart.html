@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card shadow-sm p-3">
+  <h4 class="mb-3">سبد خرید</h4>
+  {% if products %}
+    <form id="checkoutForm" method="post" action="/checkout">
+      <ul class="list-group mb-3">
+        {% for p in products %}
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            <div class="d-flex gap-3 align-items-center">
+              {% if p.image_url %}
+                <img src="{{ p.image_url }}" style="width:64px;height:64px;object-fit:cover" class="rounded">
+              {% endif %}
+              <div>
+                <div class="fw-bold">{{ p.name }}</div>
+                <div class="small text-muted">قیمت: {{ p.price }}</div>
+              </div>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+              <input type="number" 
+                     name="qty_{{ p.product_id }}" 
+                     value="{{ p.qty if p.qty is defined else 1 }}" 
+                     min="1" 
+                     class="form-control form-control-sm" 
+                     style="width:90px">
+              <button class="btn btn-danger btn-sm" formaction="/remove_from_cart/{{ p.product_id }}" formmethod="post">
+                حذف
+              </button>
+            </div>
+          </li>
+        {% endfor %}
+      </ul>
+
+      <!-- فیلد ورود کد تخفیف -->
+      <div class="mb-3">
+        <label for="discount_code" class="form-label">کد تخفیف</label>
+        
+        <input type="text" name="discount_code" id="discount_code" class="form-control" placeholder="مثال: OFF2024">
+      </div>
+
+      <div class="d-flex justify-content-between">
+
+        </button>
+        <button class="btn btn-success" type="submit">
+          پرداخت کل سبد
+        </button>
+      </div>
+    </form>
+  {% else %}
+    <p class="text-muted">سبد خرید خالی است.</p>
+  {% endif %}
+</div>
+{% endblock %}

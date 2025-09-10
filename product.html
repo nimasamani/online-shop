@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row g-4">
+  <div class="col-lg-8">
+    <div class="card shadow-sm p-3">
+      <div class="d-flex gap-3">
+        <div style="min-width:280px">
+          {% if images %}
+            <img src="{{ images[0] }}" class="img-fluid rounded" alt="{{ product.name }}">
+          {% else %}
+            <div class="placeholder-image">تصویر ندارد</div>
+          {% endif %}
+        </div>
+        <div class="flex-grow-1">
+          <h3 class="mb-1">{{ product.name }}</h3>
+          <p class="text-muted small mb-2">{{ product.category_name }}</p>
+          <div class="fs-4 text-success fw-bold mb-2">{{ product.price }} تومان</div>
+          <p>{{ product.description }}</p>
+          <div class="d-flex gap-2">
+            <a class="btn btn-outline-primary" href="/add_to_cart/{{ product.product_id }}">افزودن به سبد</a>
+            <a class="btn btn-secondary" href="/">بازگشت</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card shadow-sm p-3 mt-3">
+      <h5>نظرات</h5>
+      {% for r in reviews %}
+        <div class="border p-2 rounded mb-2">
+          <div class="d-flex justify-content-between"><strong>{{ r.buyer_id }}</strong><span>امتیاز: {{ r.rating }} / 5</span></div>
+          <p class="mb-0">{{ r.review_text }}</p>
+        </div>
+      {% else %}
+        <p class="text-muted small">هنوز نظری ثبت نشده است.</p>
+      {% endfor %}
+
+      <hr>
+      <h6>ثبت نظر</h6>
+      <form method="post" action="/review">
+        <input type="hidden" name="product_id" value="{{ product.product_id }}">
+        <div class="mb-2"><textarea name="review_text" class="form-control" placeholder="نظر شما..."></textarea></div>
+        <div class="mb-2 rating-widget" style="direction:ltr;">
+          <input type="hidden" name="rating" class="rating-value" value="0">
+          <span class="star fs-4">★</span><span class="star fs-4">★</span><span class="star fs-4">★</span><span class="star fs-4">★</span><span class="star fs-4">★</span>
+        </div>
+        <div class="row mb-2">
+          <div class="col-md-4"><input name="rating" class="form-control" placeholder="امتیاز (0-5)"></div>
+          <div class="col-md-8"><input name="image_url" class="form-control" placeholder="آدرس تصویر (اختیاری)"></div>
+        </div>
+        <button class="btn btn-primary">ارسال نظر</button>
+      </form>
+    </div>
+  </div>
+
+  <aside class="col-lg-4">
+    <div class="card shadow-sm p-3">
+      <h6 class="mb-2">تصاویر</h6>
+      {% for img in images %}
+        <img src="{{ img }}" class="img-fluid rounded mb-2">
+      {% endfor %}
+    </div>
+  </aside>
+</div>
+{% endblock %}

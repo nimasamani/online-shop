@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block content %}
+<h4 class="mb-3">پنل ادمین</h4>
+<div class="card shadow-sm p-3">
+  <a href="{{ url_for('admin_orders') }}" class="btn btn-success mb-3">مشاهده سفارش‌ها</a>
+  <a href="{{ url_for('create_discount') }}" class="btn btn-warning mb-3">ایجاد کد تخفیف</a>
+
+
+  <table class="table">
+    <thead><tr><th>ایمیل</th><th>نام</th><th>نقش</th><th>عملیات</th></tr></thead>
+    <tbody>
+      {% for u in users %}
+        <tr>
+          <td>{{ u.email }}</td>
+          <td>{{ u.fname }} {{ u.lname }}</td>
+          <td>{{ u.user_type }}</td>
+          <td>
+            <form method="post" action="/admin/set_role" class="d-flex gap-2">
+              <input type="hidden" name="email" value="{{ u.email }}">
+              <select name="role" class="form-select form-select-sm" style="width:120px;">
+                <option value="0" {% if u.user_type==0 %}selected{% endif %}>Buyer</option>
+                <option value="1" {% if u.user_type==1 %}selected{% endif %}>Seller</option>
+                <option value="2" {% if u.user_type==2 %}selected{% endif %}>Admin</option>
+              </select>
+              <button class="btn btn-sm btn-primary">بروزرسانی</button>
+            </form>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

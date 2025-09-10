@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card shadow-sm p-3">
+  <div class="mb-3 d-flex gap-2">
+    <a class="btn btn-primary btn-sm" href="/add_card">افزودن کارت</a>
+    <a class="btn btn-primary btn-sm" href="/add_address">افزودن آدرس</a>
+  </div>
+
+  <h4>پروفایل</h4>
+  <p><strong>ایمیل:</strong> {{ user.email }}</p>
+  <p><strong>نام:</strong> {{ user.fname }} {{ user.lname }}</p>
+
+  <!-- آدرس‌ها -->
+  <div class="mt-3">
+    <h6>آدرس‌ها</h6>
+    <ul class="list-unstyled">
+      {% for c in contacts %}
+        <li class="mb-1 d-flex justify-content-between align-items-center">
+          {{ c.street1 }} - {{ c.city }} - {{ c.country }}
+          {% if c.is_default %}
+            <span class="badge bg-success">پیش‌فرض</span>
+          {% endif %}
+          <div>
+            {% if not c.is_default %}
+              <form method="post" action="/set_default_address" style="display:inline-block">
+                <input type="hidden" name="address_id" value="{{ c.address_id }}">
+                <button class="btn btn-sm btn-outline-secondary">تنظیم پیش‌فرض</button>
+              </form>
+            {% endif %}
+          </div>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  <!-- کارت‌ها -->
+  <div class="mt-3">
+    <h6>کارت‌ها</h6>
+    <ul class="list-unstyled">
+      {% for card in cards %}
+        <li class="mb-1 d-flex justify-content-between align-items-center">
+          <div>
+            **** **** **** {{ (card.card_number|string)[-4:] }}
+            {% if card.is_default %}
+              <span class="badge bg-success">پیش‌فرض</span>
+            {% endif %}
+          </div>
+          <div>
+            {% if not card.is_default %}
+              <form method="post" action="/set_default_card" style="display:inline-block">
+                <input type="hidden" name="card_id" value="{{ card.card_id }}">
+                <button class="btn btn-sm btn-outline-secondary">تنظیم پیش‌فرض</button>
+              </form>
+            {% endif %}
+          </div>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  <!-- سفارش‌ها -->
+  <div class="mt-4">
+    <h6>سفارشات شما</h6>
+    {% if orders and orders|length > 0 %}
+      {% for order in orders %}
+        <div class="card mb-3 p-3">
+          <div class="d-flex justify-content-between">
+            <div><strong>شماره سفارش:</strong> {{ order.order_id }}</div>
+            <div><strong>تاریخ:</strong> {{ order.order_date_str }}</div>
+          </div>
+          <div class="mt-2">
+            <strong>وضعیت:</strong>
+            {% if order.order_status == "P" %} در حال پردازش
+            {% elif order.order_status == "S" %} ارسال شده
+            {% elif order.order_status == "D" %} تحویل داده شده
+            {% else %} {{ order.order_status }}
+            {% endif %}
+          </div>
+          <div><strong>قیمت کل:</strong> {{ order.total_price }}</div>
+
+          <div class="mt-2"><strong>آدرس تحویل:</strong>
+            {% if order.delivery_address and order.delivery_address.full_address %}
+              {{ order.delivery_address.full_address }}
+            {% else %}
+              -
+            {% endif %}
+          </div>
+
+          <div><strong>کارت استفاده‌شده:</strong>
+            {% if order.card_last4 %}
+              **** **** **** {{ order.card_last4 }}
+            {% else %}
+              -
+            {% endif %}
+          </div>
+
+          <div class="mt-2"><strong>محصولات:</strong>
+            <ul class="list-unstyled ms-3">
+              {% for p in order.products %}
+                <li>
+                  {{ p.name }} — قیمت واحد: {{ p.price }} — تعداد: {{ p.quantity }}
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      {% endfor %}
+    {% else %}
+      <p class="text-muted">⛔ شما هنوز سفارشی ثبت نکرده‌اید.</p>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}
